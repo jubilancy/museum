@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum — Tags</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+  <div class="page-header">
+    <div class="kicker">Public Domain Collection</div>
+    <h1>Tags</h1>
+    <p>Every tag in the collection, regenerated from <code>artworks.csv</code> on each deploy. Click a tag to browse its artworks.</p>
+  </div>
+  <div id="tag-cloud" class="tag-cloud"></div>
+</main>
+<script src="main.js"></script>
+<script>
+const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+async function init() {
+  renderNav("tags.html");
+  renderFooter();
+  let tags;
+  try {
+    const res = await fetch("tags-data.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("missing");
+    tags = (await res.json()).tags;
+  } catch (e) {
+    // Fallback: compute live from the CSV if the generated index isn't present.
+    const all = await loadArtworks();
+    tags = {};
+    all.forEach(a => a.tags.forEach(t => { tags[t] = (tags[t] || 0) + 1; }));
+  }
+  const sorted = Object.entries(tags).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  document.getElementById("tag-cloud").innerHTML = sorted.map(([tag, count]) =>
+    `<a class="tag-pill" href="index.html?tag=${encodeURIComponent(tag)}">${esc(tag)} <span style="opacity:.6">· ${count}</span></a>`
+  ).join("");
+}
+init();
+</script>
+</body>
+</html>

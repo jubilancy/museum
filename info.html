@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum — About</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+  <div class="page-header">
+    <div class="kicker">Public Domain Collection</div>
+    <h1>About Museum</h1>
+  </div>
+  <div class="prose">
+    <p>Museum is a static, dependency-free gallery of public domain artwork. There is no database and no server — every page reads directly from a single <code>artworks.csv</code> file checked into this repository, parsed in the browser with plain JavaScript.</p>
+    <h2>How it works</h2>
+    <p>Each row in <code>artworks.csv</code> describes one artwork: its image URL, title, source institution and a comma-separated list of tags. The gallery, sources index and tag index are all built from that one file — add a row, push, and the site updates.</p>
+    <h2>Keeping the tag index fresh</h2>
+    <p>A GitHub Actions workflow runs on every push: it reads <code>artworks.csv</code>, regenerates <code>tags-data.json</code>, and deploys the result to GitHub Pages. New tags on new artwork show up on the Tags page automatically, with no manual bookkeeping.</p>
+    <h2>Adding artwork</h2>
+    <p>Open <code>artworks.csv</code>, add a row with an image URL, title, source and tags, and push to the main branch. No build tools or dependencies are required to run or extend this site.</p>
+  </div>
+</main>
+<script src="main.js"></script>
+<script>renderNav("info.html"); renderFooter();</script>
+</body>
+</html>
