@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum — Gallery</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+  <div class="page-header">
+    <div class="kicker">Public Domain Collection</div>
+    <h1>Gallery</h1>
+    <p>A growing collection of public domain artwork, sourced from museums and archives around the world.</p>
+  </div>
+  <div id="filter-banner"></div>
+  <div id="grid" class="masonry"></div>
+  <div id="pagination" class="pagination"></div>
+</main>
+
+<div class="lightbox-backdrop" id="lightbox">
+  <div class="lightbox">
+    <img id="lightbox-img" src="" alt="">
+    <div class="lightbox-caption">
+      <div class="art-title" id="lightbox-title"></div>
+      <div class="art-source" id="lightbox-source"></div>
+      <div class="art-tags" id="lightbox-tags"></div>
+    </div>
+    <button class="lightbox-close" id="lightbox-close">Close</button>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script src="gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum — Sources</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="page">
+  <div class="page-header">
+    <div class="kicker">Public Domain Collection</div>
+    <h1>Sources</h1>
+    <p>Every artwork's origin, as recorded in the collection's CSV data.</p>
+  </div>
+  <ul id="source-list" class="item-list"></ul>
+</main>
+<script src="main.js"></script>
+<script>
+async function init() {
+  renderNav("sources.html");
+  renderFooter();
+  const all = await loadArtworks();
+  const counts = {};
+  all.forEach(a => { counts[a.source] = (counts[a.source] || 0) + 1; });
+  const sources = Object.keys(counts).sort((a, b) => a.localeCompare(b));
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  document.getElementById("source-list").innerHTML = sources.map(s => `
+    <li class="item-card">
+      <a href="index.html?source=${encodeURIComponent(s)}">
+        <div class="item-name">${esc(s)}</div>
+        <div class="item-count">${counts[s]} artwork${counts[s] === 1 ? "" : "s"}</div>
+      </a>
+    </li>
+  `).join("");
+}
+init();
+</script>
+</body>
+</html>
